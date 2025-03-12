@@ -1,0 +1,359 @@
+/* 기본 설정 */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} 
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #FAF3E0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} /* display, align-items, justify-content : 카드가 화면 중앙에 위치하도록 설정 */
+
+.navbar {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.navbar h1 {
+  font-size: 1.5rem;
+  align-items: center;
+  text-align: center;
+}
+
+.navbar .btn {
+  padding: 10px 15px;
+  border: none;
+  background-color: #FFD700;
+  color: black;
+  font-size: 1rem;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.navbar .btn:hover {
+  background-color: #FFA500;
+}
+
+.card_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 최소 300px, 자동 크기 조정 */
+  gap: 20px;
+  max-width: 1600px; /* 한 줄에 5개까지만 배치 (300px × 5 + 여백) */
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  min-width: 300px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+
+/* 카드 회전 효과 설정 */
+.card_content {
+  position: relative;
+  padding: 15rem 5rem;
+  transform-style: preserve-3d; /* 3D 효과 유지 */
+  transition: transform 2.5s; /* 2.5초 동안 부드럽게 전환 */
+} 
+
+/* 회전하는 효과 */
+.card:hover .card_content, 
+.card.flipped .card_content {
+  transform: rotateY(180deg); 
+}
+
+/* 카드 앞, 뒷면 */
+.card_front,
+.card_back {
+  position: absolute; /* 앞면과 뒷면이 겹치도록 하게 하기위해 absolute 사용 */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  backface-visibility: hidden; /* 회전 시 뒷면이 보이지 않도록 설정 */
+  transform-style: preserve-3d;
+  background-size: cover;
+  background-repeat: no-repeat; /* 크기가 작을때 반복되지않게 설정 */
+  background-blend-mode: overlay; /* 이미지와 색을 겹쳐 혼합하는 효과 (명암비) */
+  color: white;
+}
+
+/* 앞면 테두리 효과 */
+.card_front::before {
+  content: ""; /* 가상 요소 추가 */
+  position: absolute;
+  inset: 1rem;
+  border: 3px solid #FFD700;
+  transform: translateZ(2rem);
+}
+
+.card_front {
+  background-color: rgba(255, 163, 42, 0.2);
+  align-items: center;
+  z-index: 2;
+}
+
+/* 앞면 텍스트 */
+.title {
+  font-family: "Teko", sans-serif;
+  font-size: 4.5rem;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  line-height: 120%;
+  transform: translateZ(4.4rem);
+}
+
+/* 배경을 어둡게 하는 오버레이 추가 */
+.card_back::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  z-index: -1; /* 배경 위에 오버레이 적용 */
+}
+
+.card_back {
+  transform: rotateY(180deg); /* 기본 상태에서도 180도 회전하여 뒷면이 숨겨짐 */
+  gap: 0.5rem;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 20px; 
+  z-index: 1;
+}
+
+/* 텍스트를 오버레이 위로 */
+.card_back * {
+  position: relative;
+}
+
+/* 뒷면 텍스트 */
+.back_title {
+  font-family: "Teko", sans-serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #FFD700;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  align-self: center;
+  transform: translateZ(2rem);
+}
+
+.card_back span {
+  font-weight: 900;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.description, 
+.location,
+.suggestion {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  font-weight: 900;
+}
+
+.btn {
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 2.2rem;
+  color: yellow;
+  background: #FF9800;
+  border: 2px solid white;
+  border-radius: 50px;
+  text-align: center;
+  align-self: center;
+  margin-top: 1rem;
+  transform: translateZ(2rem);
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #E67E22;
+  color: white;
+}
+
+.button_group {
+  display: flex;
+  gap: 10px;
+}
+
+/* 모달 창 배경 */
+.modal {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+/* 모달 컨텐츠 */
+.modal-content {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* 제목 스타일 */
+.modal-content h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* 입력 요소 정렬 */
+.modal-content label {
+  font-weight: 600;
+  display: block;
+  margin: 10px 0 5px;
+}
+
+/* 별점 선택 스타일 */
+.modal-content select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* 텍스트 영역 스타일 */
+.modal-content textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  resize: none;
+}
+
+/* 버튼 스타일 */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  text-align: center;
+}
+
+#submitReview {
+  background-color: #28a745;
+  color: white;
+}
+
+#submitReview:hover {
+  background-color: #218838;
+}
+
+#cancelReview {
+  background-color: #dc3545;
+  color: white;
+}
+
+#cancelReview:hover {
+  background-color: #c82333;
+}
+
+#deleteReview {
+  background-color: #6c757d;
+  color: white;
+}
+
+#deleteReview:hover {
+  background-color: #5a6268;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666;
+}
+
+.close:hover {
+  color: #000;
+}
+
+.review-list {
+  background-color: #f8f8f8;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  max-height: 150px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.review-list h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#reviewsContainer p {
+  background: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  margin: 5px 0;
+  border-left: 5px solid #FFD700;
+  font-size: 0.9rem;
+}
