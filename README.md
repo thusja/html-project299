@@ -1,7 +1,7 @@
 # 🍕 오늘 뭐 먹지?
 > 가산역 근처의 맛집을 추천하는 웹페이지 제작
 
-![page]()
+![page](https://github.com/thusja/html-project299/blob/main/html%20project/docs/indexPage.PNG)
 
 
 <br>
